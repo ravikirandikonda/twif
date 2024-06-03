@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Details Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            resize: vertical;
+            height: 150px; /* Adjust as needed */
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Image Details Form</h2>
+        <form id="imageDetailsForm">
+            <label for="imageUrl">Image URL:</label>
+            <input type="text" id="imageUrl" name="imageUrl">
+
+            <label for="imageTitle">Image Title:</label>
+            <input type="text" id="imageTitle" name="imageTitle">
+
+            <label for="imageDescription">Image Description:</label>
+            <textarea id="imageDescription" name="imageDescription"></textarea>
+
+            <label for="imageArticle">Image Article:</label>
+            <textarea id="imageArticle" name="imageArticle"></textarea>
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category">
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#imageDetailsForm').submit(function (event) {
+                event.preventDefault();
+                var formData = {
+                    imageUrl: $('#imageUrl').val(),
+                    imageTitle: $('#imageTitle').val(),
+                    imageDescription: $('#imageDescription').val(),
+                    imageArticle: $('#imageArticle').val(),
+                    category: $('#category').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/imagedetails/submit',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (data) {
+                        alert('Image details submitted successfully!');
+                        $('#imageDetailsForm')[0].reset();
+                    },
+                    error: function () {
+                        alert('This data is already posted');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
